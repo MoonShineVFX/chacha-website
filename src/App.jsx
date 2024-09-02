@@ -77,13 +77,33 @@ function App() {
   }, [videoId]);
 
   const [isMobile, setIsMobile] = useState(false);
-
+  const [containerWidth, setContainerWidth] = useState("w-[40%]");
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
         setIsMobile(true);
       } else {
         setIsMobile(false);
+      }
+
+      const aspectRatio = window.innerWidth / window.innerHeight;
+
+      if (aspectRatio > 1.77) {
+        // 16:9 寬螢幕比例或更寬
+        setContainerWidth("w-[41%]");
+        console.log("16:9");
+      } else if (aspectRatio > 1.5) {
+        // 1.5:1 比例
+        setContainerWidth("w-[47%]");
+        console.log("1.5:1");
+      } else if (aspectRatio > 1.33) {
+        // 4:3 比例
+        setContainerWidth("w-[47%]");
+        console.log("4:3");
+      } else {
+        // 更窄的比例
+        setContainerWidth("w-[47%]");
+        console.log("other");
       }
     };
 
@@ -127,7 +147,9 @@ function App() {
               : "pt-[3%] justify-start "
           } `}
         >
-          <div className={` ${isMobile ? "w-full" : "pt-[2%] w-[47%]   "}  `}>
+          <div
+            className={` ${isMobile ? "w-full" : `pt-[2%] ${containerWidth}`} `}
+          >
             {videoId && (
               <div className="w-full  aspect-video drop-shadow-xl rounded-lg overflow-hidden">
                 <ReactPlayer
