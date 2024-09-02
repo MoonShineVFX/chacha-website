@@ -170,13 +170,13 @@ function App() {
               <div
                 className={`text-base font-normal text-white/90 leading-6 ${
                   isMobile
-                    ? "pt-[3%] px-[3%] w-[85%]  leading-loose "
+                    ? "pt-[3%] px-[3%]  leading-relaxed "
                     : "pt-[2%] px-[3%]"
                 }`}
               >
                 Hello 歡迎大家來到隆田chacha園區，
-                體驗「四鐵迴憶、沈浸AI劇院」， <br />
-                透過AI技術一銅搭乘時空列車， 到未來的臺南500隆田chacha園區！
+                體驗「四鐵迴憶、沈浸AI劇院」， 透過AI技術一銅搭乘時空列車，
+                到未來的臺南500隆田chacha園區！
               </div>
               <div className={`flex w-full items-end gap-2 justify-end   `}>
                 <div
