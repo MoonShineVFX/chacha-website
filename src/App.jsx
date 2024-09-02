@@ -76,31 +76,6 @@ function App() {
     }
   }, [videoId]);
 
-  const handleDownload = async (videoUrl) => {
-    try {
-      const response = await fetch(videoUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "video/mp4",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const blob = await response.blob();
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "downloaded-video.mp4"; // Suggested file name
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading the video:", error);
-    }
-  };
-
   const [isMobile, setIsMobile] = useState(false);
   const [containerWidth, setContainerWidth] = useState("w-[40%]");
   useEffect(() => {
@@ -212,12 +187,13 @@ function App() {
                   <div onClick={handleOpen} className=" cursor-pointer ">
                     <img src={icon_share} alt="" />
                   </div>
-                  <div
+                  <a
+                    href={curVideo.video_url}
+                    download
                     className="btn-download"
-                    onClick={() => handleDownload(curVideo.video_url)}
                   >
                     <img src={icon_home} alt="" />
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
