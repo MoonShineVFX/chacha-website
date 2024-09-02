@@ -76,53 +76,29 @@ function App() {
     }
   }, [videoId]);
 
-  const downloadFile = async (url, id, fileName, mediaType) => {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        Origin: "*",
-        Authorization: `${localStorage.getItem("idToken")}`,
-      },
-    })
-      .then((res) => {
-        const contentLength = res.headers.get("content-length");
-        let loaded = 0;
-
-        return new Response(
-          new ReadableStream({
-            start(controller) {
-              const reader = res.body.getReader();
-
-              read();
-              function read() {
-                reader.read().then((progressEvent) => {
-                  if (progressEvent.done === true) {
-                    controller.close();
-                    return;
-                  }
-                  loaded += progressEvent.value.byteLength;
-                  let downloadedPercent =
-                    Math.round((loaded / contentLength) * 100) + "%";
-                  // console.log(downloadedPercent);
-                  controller.enqueue(progressEvent.value);
-                  read();
-                });
-              }
-            },
-          })
-        );
-      })
-      .then(async (response) => {
-        const blob = await response.blob();
-        const url1 = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url1;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url1);
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(videoUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "video/mp4",
+        },
       });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "downloaded-video.mp4"; // Suggested file name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the video:", error);
+    }
   };
 
   const [isMobile, setIsMobile] = useState(false);
@@ -238,14 +214,7 @@ function App() {
                   </div>
                   <div
                     className="btn-download"
-                    onClick={() =>
-                      downloadFile(
-                        curVideo.video_url,
-                        curVideo.id,
-                        "video.mp4",
-                        "video/mp4"
-                      )
-                    }
+                    onClick={() => handleDownload(curVideo.video_url)}
                   >
                     <img src={icon_home} alt="" />
                   </div>
