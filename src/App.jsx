@@ -121,11 +121,11 @@ function App() {
       >
         <div className="bg-black fixed w-full h-screen -z-10 opacity-10 top-0 left-0"></div>
         <div
-          className={`flex flex-col justify-center items-center p-6  ${
-            isMobile ? "h-screen" : ""
+          className={`flex flex-col justify-center items-center   ${
+            isMobile ? "h-screen px-6 -mt-3" : "p-6"
           } `}
         >
-          <div className={`w-full ${isMobile ? "" : "pt-[1%] w-[90vh]"}  `}>
+          <div className={`w-full ${isMobile ? "" : "pt-[1%] w-[700px]"}  `}>
             {videoId && (
               <div className="w-full  aspect-video drop-shadow-xl rounded-lg overflow-hidden">
                 <ReactPlayer
