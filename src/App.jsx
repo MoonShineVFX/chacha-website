@@ -187,7 +187,11 @@ function App() {
                   <div onClick={handleOpen} className=" cursor-pointer ">
                     <img src={icon_share} alt="" />
                   </div>
-                  <a href="https://digiwave.tw/" target="_blank">
+                  <a
+                    href={curVideo.video_url}
+                    download
+                    className="btn-download"
+                  >
                     <img src={icon_home} alt="" />
                   </a>
                 </div>
