@@ -114,18 +114,20 @@ function App() {
   return (
     <>
       <div
-        className="bg-[#1e2023] min-h-screen bg-cover bg-center bg-no-repeat z-10 relative bg-fixed"
+        className="bg-[#000] min-h-screen bg-contain bg-top bg-no-repeat z-10 relative bg-fixed"
         style={{
           backgroundImage: `url(${isMobile ? mb_bg : web_bg})`,
         }}
       >
         <div className="bg-black fixed w-full h-screen -z-10 opacity-10 top-0 left-0"></div>
         <div
-          className={`flex flex-col justify-center items-center   ${
-            isMobile ? "h-screen px-6 -mt-3" : "p-6"
+          className={`flex flex-col items-center  h-screen   ${
+            isMobile
+              ? "h-screen px-6 -mt-5 justify-center"
+              : "pt-[3%] justify-start "
           } `}
         >
-          <div className={` ${isMobile ? "w-full" : "pt-[1%] w-[48%]"}  `}>
+          <div className={` ${isMobile ? "w-full" : "pt-[2%] w-[47%]   "}  `}>
             {videoId && (
               <div className="w-full  aspect-video drop-shadow-xl rounded-lg overflow-hidden">
                 <ReactPlayer
@@ -146,30 +148,27 @@ function App() {
               <div
                 className={`text-base font-normal text-white/90 leading-6 ${
                   isMobile
-                    ? "pt-[3%] w-[85%]  leading-loose tracking-wide"
-                    : "pt-[2%]"
+                    ? "pt-[3%] px-[3%] w-[85%]  leading-loose "
+                    : "pt-[2%] px-[3%]"
                 }`}
               >
                 Hello 歡迎大家來到隆田chacha園區，
                 體驗「四鐵迴憶、沈浸AI劇院」， <br />
                 透過AI技術一銅搭乘時空列車， 到未來的臺南500隆田chacha園區！
               </div>
-            </div>
-
-            <div
-              className={`flex w-full items-end gap-2 justify-end  border-t border-white/30 `}
-            >
-              <div
-                className={`${
-                  isMobile ? "w-2/3 pt-[4%]" : "w-[25%]"
-                }  flex ml-auto justify-end`}
-              >
-                <div onClick={handleOpen} className=" cursor-pointer ">
-                  <img src={icon_share} alt="" />
+              <div className={`flex w-full items-end gap-2 justify-end   `}>
+                <div
+                  className={`${
+                    isMobile ? "w-2/3 pt-[4%]" : "w-[25%]"
+                  }  flex ml-auto justify-end`}
+                >
+                  <div onClick={handleOpen} className=" cursor-pointer ">
+                    <img src={icon_share} alt="" />
+                  </div>
+                  <a href="https://digiwave.tw/" target="_blank">
+                    <img src={icon_home} alt="" />
+                  </a>
                 </div>
-                <a href="https://digiwave.tw/" target="_blank">
-                  <img src={icon_home} alt="" />
-                </a>
               </div>
             </div>
           </div>
