@@ -125,7 +125,7 @@ function App() {
             isMobile ? "h-screen px-6 -mt-3" : "p-6"
           } `}
         >
-          <div className={`w-full ${isMobile ? "" : "pt-[1%] w-[700px]"}  `}>
+          <div className={` ${isMobile ? "" : "pt-[1%] w-[700px]"}  `}>
             {videoId && (
               <div className="w-full  aspect-video drop-shadow-xl rounded-lg overflow-hidden">
                 <ReactPlayer
