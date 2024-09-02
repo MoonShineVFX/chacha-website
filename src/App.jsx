@@ -19,7 +19,10 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from "react-share";
-
+import icon_home from "./assets/icon_home.png";
+import icon_share from "./assets/icon_share.png";
+import web_bg from "./assets/web_bg.png";
+import mb_bg from "./assets/mb_bg.png";
 function App() {
   const url = window.location.href;
   const [isCopied, setIsCopied] = useState(false);
@@ -73,12 +76,33 @@ function App() {
     }
   }, [videoId]);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+      }
+    };
+
+    // 初次渲染時執行一次
+    handleResize();
+
+    // 監聽視窗大小變化
+    window.addEventListener("resize", handleResize);
+
+    // 清除事件監聽器
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   if (!curVideo) {
     return (
       <div
         className="bg-[#1e2023] min-h-screen bg-cover bg-center bg-no-repeat z-10 relative bg-fixed flex justify-center items-center text-white"
         style={{
-          backgroundImage: `url(${"https://moonshine.b-cdn.net/msweb/digiwave/main_bg01.jpg"})`,
+          backgroundImage: `url(${isMobile ? mb_bg : web_bg})`,
         }}
       >
         <div className="bg-black fixed w-full h-screen -z-10 opacity-80 top-0 left-0"></div>
@@ -92,12 +116,16 @@ function App() {
       <div
         className="bg-[#1e2023] min-h-screen bg-cover bg-center bg-no-repeat z-10 relative bg-fixed"
         style={{
-          backgroundImage: `url(${"https://moonshine.b-cdn.net/msweb/digiwave/main_bg01.jpg"})`,
+          backgroundImage: `url(${isMobile ? mb_bg : web_bg})`,
         }}
       >
-        <div className="bg-black fixed w-full h-screen -z-10 opacity-80 top-0 left-0"></div>
-        <div className="flex flex-col justify-center items-center p-6 ">
-          <div className="w-full md:max-w-4xl">
+        <div className="bg-black fixed w-full h-screen -z-10 opacity-10 top-0 left-0"></div>
+        <div
+          className={`flex flex-col justify-center items-center p-6  ${
+            isMobile ? "h-screen" : ""
+          } `}
+        >
+          <div className={`w-full ${isMobile ? "" : "pt-[1%] w-[90vh]"}  `}>
             {videoId && (
               <div className="w-full  aspect-video drop-shadow-xl rounded-lg overflow-hidden">
                 <ReactPlayer
@@ -114,41 +142,35 @@ function App() {
               </div>
             )}
 
-            <div className="text-white my-3 rounded-sm space-y-4 ">
-              <div className="text-sm font-normal text-white/90 leading-6">
-                {curVideo && (
-                  <TextContent
-                    storyScript={storyScript}
-                    data={curVideo}
-                    type="zh"
-                  />
-                )}
-              </div>
-
-              <div className="text-sm font-normal text-white/90 leading-6">
-                {curVideo && (
-                  <TextContent
-                    storyScript={storyScript}
-                    data={curVideo}
-                    type="en"
-                  />
-                )}
+            <div className="text-white my-5 rounded-sm space-y-4 ">
+              <div
+                className={`text-base font-normal text-white/90 leading-6 ${
+                  isMobile
+                    ? "pt-[3%] w-[85%]  leading-loose tracking-wide"
+                    : "pt-[2%]"
+                }`}
+              >
+                Hello 歡迎大家來到隆田chacha園區，
+                體驗「四鐵迴憶、沈浸AI劇院」， <br />
+                透過AI技術一銅搭乘時空列車， 到未來的臺南500隆田chacha園區！
               </div>
             </div>
 
-            <div className="flex w-full items-end gap-4 justify-end mt-14 border-t border-white/30 py-5">
-              <Button
-                onClick={handleOpen}
-                color="white"
-                className="flex items-center gap-3"
+            <div
+              className={`flex w-full items-end gap-2 justify-end  border-t border-white/30 `}
+            >
+              <div
+                className={`${
+                  isMobile ? "w-2/3 pt-[4%]" : "w-[25%]"
+                }  flex ml-auto justify-end`}
               >
-                Share <FaShareNodes />
-              </Button>
-              <a href="https://digiwave.tw/" target="_blank">
-                <Button className="flex items-center gap-3 " color="white">
-                  Home <FaShare />
-                </Button>
-              </a>
+                <div onClick={handleOpen} className=" cursor-pointer ">
+                  <img src={icon_share} alt="" />
+                </div>
+                <a href="https://digiwave.tw/" target="_blank">
+                  <img src={icon_home} alt="" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
