@@ -76,26 +76,53 @@ function App() {
     }
   }, [videoId]);
 
-  const handleDownload = async (videoUrl) => {
-    try {
-      // Fetch the video file
-      const response = await fetch(videoUrl);
-      const blob = await response.blob();
+  const downloadFile = async (url, id, fileName, mediaType) => {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Origin: "*",
+        Authorization: `${localStorage.getItem("idToken")}`,
+      },
+    })
+      .then((res) => {
+        const contentLength = res.headers.get("content-length");
+        let loaded = 0;
 
-      // Create a link element
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "video.mp4"; // You can specify the file name here
+        return new Response(
+          new ReadableStream({
+            start(controller) {
+              const reader = res.body.getReader();
 
-      // Append to the document and trigger click
-      document.body.appendChild(link);
-      link.click();
-
-      // Clean up and remove the link
-      link.parentNode.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading the video:", error);
-    }
+              read();
+              function read() {
+                reader.read().then((progressEvent) => {
+                  if (progressEvent.done === true) {
+                    controller.close();
+                    return;
+                  }
+                  loaded += progressEvent.value.byteLength;
+                  let downloadedPercent =
+                    Math.round((loaded / contentLength) * 100) + "%";
+                  // console.log(downloadedPercent);
+                  controller.enqueue(progressEvent.value);
+                  read();
+                });
+              }
+            },
+          })
+        );
+      })
+      .then(async (response) => {
+        const blob = await response.blob();
+        const url1 = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url1;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url1);
+      });
   };
 
   const [isMobile, setIsMobile] = useState(false);
@@ -211,7 +238,14 @@ function App() {
                   </div>
                   <div
                     className="btn-download"
-                    onClick={() => handleDownload(curVideo.video_url)}
+                    onClick={() =>
+                      downloadFile(
+                        curVideo.video_url,
+                        curVideo.id,
+                        "video.mp4",
+                        "video/mp4"
+                      )
+                    }
                   >
                     <img src={icon_home} alt="" />
                   </div>
