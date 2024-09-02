@@ -76,7 +76,7 @@ function App() {
     }
   }, [videoId]);
 
-  const handleDownload = async () => {
+  const handleDownload = async (videoUrl) => {
     try {
       const response = await fetch(videoUrl, {
         method: "GET",
