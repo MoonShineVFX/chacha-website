@@ -223,7 +223,7 @@ function App() {
                     <img src={icon_share} alt="" />
                   </div>
                   <div
-                    onClick={() => downloadFile(curVideo.video_url)}
+                    onClick={() => downloadVideo(curVideo.video_url)}
                     className="btn-download"
                   >
                     <img src={icon_home} alt="" />
