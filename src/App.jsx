@@ -83,7 +83,8 @@ function App() {
     fetch(corsanywhere + url)
       .then((response) => response.blob())
       .then((blob) => {
-        const downloadUrl = window.URL.createObjectURL(blob);
+        const videoBlob = new Blob([blob], { type: "video/mp4" });
+        const downloadUrl = window.URL.createObjectURL(videoBlob);
         const link = document.createElement("a");
         link.href = downloadUrl;
         link.setAttribute("download", fileName);
