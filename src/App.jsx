@@ -81,7 +81,7 @@ function App() {
     let corsanywhere = "https://mscors-anywhwere.kilokingw.workers.dev/";
     const fileName = "outputVideo.mp4";
 
-    fetch(corsanywhere + url)
+    fetch(url)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -106,9 +106,6 @@ function App() {
         window.URL.revokeObjectURL(downloadUrl);
       })
       .catch((err) => console.error("Error downloading video:", err));
-  };
-  const downloadFile = (url) => {
-    saveAs(url, "outputVideo.mp4");
   };
 
   const [isMobile, setIsMobile] = useState(false);
