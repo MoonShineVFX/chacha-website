@@ -228,9 +228,6 @@ function App() {
                   >
                     <img src={icon_home} alt="" />
                   </div>
-                  <a href={curVideo.video_url} downlaod>
-                    download
-                  </a>
                 </div>
               </div>
             </div>
