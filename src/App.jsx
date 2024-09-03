@@ -76,6 +76,30 @@ function App() {
     }
   }, [videoId]);
 
+  const downloadVideo = (url) => {
+    const fileName = "outputVideo.mp4";
+
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", fileName);
+
+        // Append to the document
+        document.body.appendChild(link);
+
+        // Trigger download
+        link.click();
+
+        // Clean up
+        link.parentNode.removeChild(link);
+        window.URL.revokeObjectURL(downloadUrl);
+      })
+      .catch((err) => console.error("Error downloading video:", err));
+  };
+
   const [isMobile, setIsMobile] = useState(false);
   const [containerWidth, setContainerWidth] = useState("w-[40%]");
   useEffect(() => {
@@ -187,13 +211,12 @@ function App() {
                   <div onClick={handleOpen} className=" cursor-pointer ">
                     <img src={icon_share} alt="" />
                   </div>
-                  <a
-                    href={curVideo.video_url}
-                    download
+                  <div
+                    onClick={() => downloadVideo(curVideo.video_url)}
                     className="btn-download"
                   >
                     <img src={icon_home} alt="" />
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
