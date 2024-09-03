@@ -78,10 +78,10 @@ function App() {
   }, [videoId]);
 
   const downloadVideo = (url) => {
-    let corsanywhere = "https://mscors-anywhwere.kilokingw.workers.dev/";
+    let corsanywhere = "https://mscors-anywhwere.kilokingw.workers.dev/?";
     const fileName = "outputVideo.mp4";
 
-    fetch(url)
+    fetch(corsanywhere + url)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
