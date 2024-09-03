@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { FaRegCopy, FaShareNodes, FaShare } from "react-icons/fa6";
 import { storyScript, videoData } from "./data";
 import TextContent from "./TextContent";
+import { saveAs } from "file-saver";
 import {
   Button,
   Dialog,
@@ -81,7 +82,12 @@ function App() {
     const fileName = "outputVideo.mp4";
 
     fetch(corsanywhere + url)
-      .then((response) => response.blob())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob();
+      })
       .then((blob) => {
         const videoBlob = new Blob([blob], { type: "video/mp4" });
         const downloadUrl = window.URL.createObjectURL(videoBlob);
@@ -100,6 +106,9 @@ function App() {
         window.URL.revokeObjectURL(downloadUrl);
       })
       .catch((err) => console.error("Error downloading video:", err));
+  };
+  const downloadFile = (url) => {
+    saveAs(url, "outputVideo.mp4");
   };
 
   const [isMobile, setIsMobile] = useState(false);
@@ -214,11 +223,14 @@ function App() {
                     <img src={icon_share} alt="" />
                   </div>
                   <div
-                    onClick={() => downloadVideo(curVideo.video_url)}
+                    onClick={() => downloadFile(curVideo.video_url)}
                     className="btn-download"
                   >
                     <img src={icon_home} alt="" />
                   </div>
+                  <a href={curVideo.video_url} downlaod>
+                    download
+                  </a>
                 </div>
               </div>
             </div>
