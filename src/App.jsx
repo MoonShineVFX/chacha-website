@@ -77,9 +77,10 @@ function App() {
   }, [videoId]);
 
   const downloadVideo = (url) => {
+    let corsanywhere = "https://mscors-anywhwere.kilokingw.workers.dev/";
     const fileName = "outputVideo.mp4";
 
-    fetch(url)
+    fetch(corsanywhere + url)
       .then((response) => response.blob())
       .then((blob) => {
         const downloadUrl = window.URL.createObjectURL(blob);
