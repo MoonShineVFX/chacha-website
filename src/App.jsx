@@ -263,9 +263,7 @@ function App() {
               <LineShareButton url={url}>
                 <LineIcon size={40} round={true} />
               </LineShareButton>
-              <TwitterShareButton url={url}>
-                <TwitterIcon size={40} round={true} />
-              </TwitterShareButton>
+
               <div>
                 <IconButton
                   className="rounded-full flex justify-between  relative"
