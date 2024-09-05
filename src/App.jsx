@@ -22,8 +22,12 @@ import {
 } from "react-share";
 import icon_home from "./assets/icon_home.png";
 import icon_share from "./assets/icon_share.png";
+import icon_dl from "./assets/icon_dl.png";
 import web_bg from "./assets/web_bg.png";
 import mb_bg from "./assets/mb_bg.png";
+import mb_border from "./assets/mb_border.png";
+import mb_border1 from "./assets/mb_border1.png";
+import mb_border2 from "./assets/mb_border2.png";
 function App() {
   const url = window.location.href;
   const [isCopied, setIsCopied] = useState(false);
@@ -173,14 +177,21 @@ function App() {
       >
         <div className="bg-black fixed w-full h-screen -z-10 opacity-10 top-0 left-0"></div>
         <div
-          className={`flex flex-col items-center  h-screen   ${
+          className={`flex flex-col items-center    ${
             isMobile
-              ? "h-screen px-6 -mt-5 justify-center"
-              : "pt-[3%] justify-start "
+              ? "h-screen  -mt-5 justify-center"
+              : "pt-[3%] justify-start h-screen "
           } `}
         >
           <div
-            className={` ${isMobile ? "w-full" : `pt-[2%] ${containerWidth}`} `}
+            className={`bg-contain bg-no-repeat bg-top    ${
+              isMobile
+                ? "w-full aspect-[400/600] px-6 pt-[8%]"
+                : `pt-[2%] ${containerWidth}`
+            } `}
+            style={{
+              backgroundImage: `url(${isMobile ? mb_border : ""})`,
+            }}
           >
             {videoId && (
               <div className="w-full  aspect-video drop-shadow-xl rounded-lg overflow-hidden">
@@ -197,8 +208,14 @@ function App() {
                 />
               </div>
             )}
+            {isMobile && (
+              <div className="flex items-center  justify-between mt-[3%] px-2">
+                <img src={mb_border1} alt="" />
+                <img src={mb_border2} alt="" />
+              </div>
+            )}
 
-            <div className="text-white my-5 rounded-sm space-y-4 ">
+            <div className="text-white my-3 rounded-sm space-y-4 flex flex-col justify-between h-[40%] ">
               <div
                 className={`text-base font-normal text-white/90 leading-6 ${
                   isMobile
@@ -206,14 +223,12 @@ function App() {
                     : "pt-[2%] px-[3%]"
                 }`}
               >
-                Hello 歡迎大家來到隆田chacha園區，
-                體驗「四鐵迴憶、沈浸AI劇院」， 透過AI技術一銅搭乘時空列車，
-                到未來的臺南500隆田chacha園區！
+                Hello歡迎大家來到隆田ChaCha文化資產教育園區，體驗「四鐵迴憶·AI沉浸式劇場」，並透過AI技術一同搭乘時空列車來到未來時空的隆田儲運站喔！
               </div>
-              <div className={`flex w-full items-end gap-2 justify-end   `}>
+              <div className={`flex w-full items-end gap-2 justify-end      `}>
                 <div
                   className={`${
-                    isMobile ? "w-2/3 pt-[4%]" : "w-[25%]"
+                    isMobile ? "w-2/3 pt-[6%] " : "w-[25%]"
                   }  flex ml-auto justify-end`}
                 >
                   <div onClick={handleOpen} className=" cursor-pointer ">
@@ -223,7 +238,7 @@ function App() {
                     onClick={() => downloadVideo(curVideo.video_url)}
                     className="btn-download"
                   >
-                    <img src={icon_home} alt="" />
+                    <img src={icon_dl} alt="" />
                   </div>
                 </div>
               </div>
