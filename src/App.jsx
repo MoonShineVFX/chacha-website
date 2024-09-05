@@ -156,7 +156,9 @@ function App() {
   if (!curVideo) {
     return (
       <div
-        className="bg-[#1e2023] min-h-screen bg-cover bg-center bg-no-repeat z-10 relative bg-fixed flex justify-center items-center text-white"
+        className={`bg-[#1e2023] min-h-screen bg-cover bg-center bg-no-repeat z-10 relative flex justify-center items-center text-white ${
+          isMobile ? "bg-local" : "  bg-fixed"
+        }`}
         style={{
           backgroundImage: `url(${isMobile ? mb_bg : web_bg})`,
         }}
@@ -170,7 +172,9 @@ function App() {
   return (
     <>
       <div
-        className="bg-[#000] min-h-screen bg-contain bg-top bg-no-repeat z-10 relative bg-fixed"
+        className={`bg-[#000] min-h-screen bg-top bg-no-repeat z-10 relative  ${
+          isMobile ? "bg-local bg-cover" : "  bg-fixed bg-contain  "
+        }`}
         style={{
           backgroundImage: `url(${isMobile ? mb_bg : web_bg})`,
         }}
