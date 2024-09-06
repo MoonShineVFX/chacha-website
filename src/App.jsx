@@ -170,133 +170,131 @@ function App() {
   }
 
   return (
-    <>
+    <div
+      className={`bg-[#000] min-h-screen  bg-no-repeat z-10 relative  ${
+        isMobile ? "  bg-cover bg-center" : " bg-fixed bg-contain bg-top  "
+      }`}
+      style={{
+        backgroundImage: `url(${isMobile ? mb_bg : web_bg})`,
+      }}
+    >
+      <div className="bg-black fixed w-full h-screen -z-10 opacity-10 top-0 left-0"></div>
       <div
-        className={`bg-[#000] min-h-screen bg-top bg-no-repeat z-10 relative  ${
-          isMobile ? "bg-local bg-cover" : "  bg-fixed bg-contain  "
-        }`}
-        style={{
-          backgroundImage: `url(${isMobile ? mb_bg : web_bg})`,
-        }}
+        className={`flex flex-col items-center    ${
+          isMobile
+            ? "h-[100vh]  justify-center"
+            : "pt-[3%] justify-start h-screen "
+        } `}
       >
-        <div className="bg-black fixed w-full h-screen -z-10 opacity-10 top-0 left-0"></div>
         <div
-          className={`flex flex-col items-center    ${
+          className={`bg-contain bg-no-repeat bg-top    ${
             isMobile
-              ? "h-screen  -mt-5 justify-center"
-              : "pt-[3%] justify-start h-screen "
+              ? "w-full aspect-[400/600] px-6 pt-[8%]"
+              : `pt-[2%] ${containerWidth}`
           } `}
+          style={{
+            backgroundImage: `url(${isMobile ? mb_border : ""})`,
+          }}
         >
-          <div
-            className={`bg-contain bg-no-repeat bg-top    ${
-              isMobile
-                ? "w-full aspect-[400/600] px-6 pt-[8%]"
-                : `pt-[2%] ${containerWidth}`
-            } `}
-            style={{
-              backgroundImage: `url(${isMobile ? mb_border : ""})`,
-            }}
-          >
-            {videoId && (
-              <div className="w-full  aspect-video drop-shadow-xl rounded-lg overflow-hidden">
-                <ReactPlayer
-                  url={
-                    curVideo
-                      ? curVideo.video_url
-                      : "https://www.youtube.com/watch?v=kvKSi5_pnjk"
-                  }
-                  className="w-full "
-                  width="100%"
-                  height="100%"
-                  controls={true}
-                />
-              </div>
-            )}
-            {isMobile && (
-              <div className="flex items-center  justify-between mt-[3%] px-2">
-                <img src={mb_border1} alt="" />
-                <img src={mb_border2} alt="" />
-              </div>
-            )}
+          {videoId && (
+            <div className="w-full  aspect-video drop-shadow-xl rounded-lg overflow-hidden">
+              <ReactPlayer
+                url={
+                  curVideo
+                    ? curVideo.video_url
+                    : "https://www.youtube.com/watch?v=kvKSi5_pnjk"
+                }
+                className="w-full "
+                width="100%"
+                height="100%"
+                controls={true}
+              />
+            </div>
+          )}
+          {isMobile && (
+            <div className="flex items-center  justify-between mt-[3%] px-2">
+              <img src={mb_border1} alt="" />
+              <img src={mb_border2} alt="" />
+            </div>
+          )}
 
-            <div className="text-white my-3 rounded-sm space-y-4 flex flex-col justify-between h-[40%] ">
+          <div className="text-white my-3 rounded-sm space-y-4 flex flex-col justify-between h-[40%] ">
+            <div
+              className={`text-base font-normal text-white/90 leading-6 ${
+                isMobile
+                  ? "pt-[3%] px-[3%]  leading-relaxed "
+                  : "pt-[2%] px-[3%]"
+              }`}
+            >
+              Hello歡迎大家來到隆田ChaCha文化資產教育園區，體驗「四鐵迴憶·AI沉浸式劇場」，並透過AI技術一同搭乘時空列車來到未來時空的隆田儲運站喔！
+            </div>
+            <div className={`flex w-full items-end gap-2 justify-end      `}>
               <div
-                className={`text-base font-normal text-white/90 leading-6 ${
-                  isMobile
-                    ? "pt-[3%] px-[3%]  leading-relaxed "
-                    : "pt-[2%] px-[3%]"
-                }`}
+                className={`${
+                  isMobile ? "w-2/3 pt-[6%] " : "w-[25%]"
+                }  flex ml-auto justify-end`}
               >
-                Hello歡迎大家來到隆田ChaCha文化資產教育園區，體驗「四鐵迴憶·AI沉浸式劇場」，並透過AI技術一同搭乘時空列車來到未來時空的隆田儲運站喔！
-              </div>
-              <div className={`flex w-full items-end gap-2 justify-end      `}>
+                <div onClick={handleOpen} className=" cursor-pointer ">
+                  <img src={icon_share} alt="" />
+                </div>
                 <div
-                  className={`${
-                    isMobile ? "w-2/3 pt-[6%] " : "w-[25%]"
-                  }  flex ml-auto justify-end`}
+                  onClick={() => downloadVideo(curVideo.video_url)}
+                  className="btn-download"
                 >
-                  <div onClick={handleOpen} className=" cursor-pointer ">
-                    <img src={icon_share} alt="" />
-                  </div>
-                  <div
-                    onClick={() => downloadVideo(curVideo.video_url)}
-                    className="btn-download"
-                  >
-                    <img src={icon_dl} alt="" />
-                  </div>
+                  <img src={icon_dl} alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <Dialog
-          open={open}
-          handler={handleOpen}
-          animate={{
-            mount: { scale: 1, y: 0 },
-            unmount: { scale: 0.9, y: -100 },
-          }}
-          className="bg-gray-900 text-white"
-        >
-          <DialogHeader className="text-white">Share.</DialogHeader>
-          <DialogBody>
-            <div className="flex gap-4 justify-center">
-              <FacebookShareButton url={url}>
-                <FacebookIcon size={40} round={true} />
-              </FacebookShareButton>
-              <LineShareButton url={url}>
-                <LineIcon size={40} round={true} />
-              </LineShareButton>
-
-              <div>
-                <IconButton
-                  className="rounded-full flex justify-between  relative"
-                  color="white"
-                  onClick={handleCopyUrl}
-                >
-                  <FaRegCopy size={15} />
-                </IconButton>
-                {isCopied && (
-                  <div className=" absolute z-20  text-xs text-white mt-3">
-                    Copied!
-                  </div>
-                )}
-              </div>
-            </div>
-          </DialogBody>
-          <DialogFooter>
-            <Button
-              variant="text"
-              color="white"
-              onClick={handleOpen}
-              className="mr-1"
-            >
-              <span>Cancel</span>
-            </Button>
-          </DialogFooter>
-        </Dialog>
       </div>
-    </>
+      <Dialog
+        open={open}
+        handler={handleOpen}
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+        className="bg-gray-900 text-white"
+      >
+        <DialogHeader className="text-white">Share.</DialogHeader>
+        <DialogBody>
+          <div className="flex gap-4 justify-center">
+            <FacebookShareButton url={url}>
+              <FacebookIcon size={40} round={true} />
+            </FacebookShareButton>
+            <LineShareButton url={url}>
+              <LineIcon size={40} round={true} />
+            </LineShareButton>
+
+            <div>
+              <IconButton
+                className="rounded-full flex justify-between  relative"
+                color="white"
+                onClick={handleCopyUrl}
+              >
+                <FaRegCopy size={15} />
+              </IconButton>
+              {isCopied && (
+                <div className=" absolute z-20  text-xs text-white mt-3">
+                  Copied!
+                </div>
+              )}
+            </div>
+          </div>
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="white"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
+    </div>
   );
 }
 
