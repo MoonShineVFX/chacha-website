@@ -226,7 +226,7 @@ function App() {
                   : "pt-[2%] px-[3%]"
               }`}
             >
-              Hello歡迎大家來到隆田ChaCha文化資產教育園區，體驗「四鐵迴憶·AI沉浸式劇場」，並透過AI技術一同搭乘時空列車來到未來時空的隆田儲運站喔！
+              Hello歡迎大家來到隆田ChaCha文化資產教育園區，體驗「四鐵迴憶·AI沉浸式劇場」，並透過AI技術一同搭乘時空列車來到未來的隆田喔！
             </div>
             <div className={`flex w-full items-end gap-2 justify-end      `}>
               <div
